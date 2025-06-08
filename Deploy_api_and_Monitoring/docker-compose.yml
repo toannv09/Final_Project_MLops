@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    image: toannguyenuit/breast-cancer-api:latest
+    image: toannguyenuit/vnfood-classification-api:latest
     ports:
       - "5000:5000"
     restart: always
