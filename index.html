@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Image Prediction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      max-width: 600px;
+    }
+    h1 {
+      color: #333;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dự đoán ảnh</h1>
+  <form id="uploadForm">
+    <input type="file" id="imageInput" accept="image/jpeg,image/png" required />
+    <button type="submit">Gửi ảnh</button>
+  </form>
+
+  <div class="result" id="result" style="display:none;">
+    <h3>Kết quả dự đoán:</h3>
+    <p><strong>Class:</strong> <span id="class"></span></p>
+    <p><strong>Confidence:</strong> <span id="confidence"></span></p>
+    <p><strong>Inference time (s):</strong> <span id="time"></span></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const resultDiv = document.getElementById('result');
+    const classEl = document.getElementById('class');
+    const confidenceEl = document.getElementById('confidence');
+    const timeEl = document.getElementById('time');
+
+    // Thay URL này bằng URL public API của bạn (ngrok hoặc domain)
+    const API_URL = 'https://5cd1-2402-800-6311-aeab-f986-c84d-7c90-ca09.ngrok-free.app/predict';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      resultDiv.style.display = 'none';
+
+      const fileInput = document.getElementById('imageInput');
+      if (fileInput.files.length === 0) {
+        alert('Vui lòng chọn ảnh');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const err = await response.json();
+          alert(`Lỗi: ${err.detail || response.statusText}`);
+          return;
+        }
+
+        const data = await response.json();
+        classEl.textContent = data.class;
+        confidenceEl.textContent = data.confidence;
+        timeEl.textContent = data.inference_time;
+        resultDiv.style.display = 'block';
+
+      } catch (error) {
+        alert('Lỗi kết nối API: ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
