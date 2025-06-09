@@ -15,51 +15,69 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 20px;
+      overflow-x: hidden;
     }
 
-    .container {
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 30px;
+      min-height: calc(100vh - 40px);
+      align-items: start;
+    }
+
+    .content-section {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       padding: 40px;
-      max-width: 600px;
-      width: 100%;
-      text-align: center;
       transition: transform 0.3s ease;
     }
 
-    .container:hover {
-      transform: translateY(-5px);
+    .content-section:hover {
+      transform: translateY(-2px);
+    }
+
+    .sidebar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      height: fit-content;
+      position: sticky;
+      top: 20px;
     }
 
     h1 {
       color: #333;
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
       font-weight: 300;
       background: linear-gradient(135deg, #667eea, #764ba2);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      text-align: center;
     }
 
     .subtitle {
       color: #666;
-      font-size: 1.1rem;
-      margin-bottom: 40px;
+      font-size: 1rem;
+      margin-bottom: 30px;
       opacity: 0.8;
+      text-align: center;
     }
 
     .upload-area {
       border: 3px dashed #667eea;
       border-radius: 15px;
-      padding: 40px 20px;
-      margin: 30px 0;
+      padding: 30px 20px;
+      margin: 25px 0;
       background: linear-gradient(45deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
       transition: all 0.3s ease;
       cursor: pointer;
@@ -70,7 +88,7 @@
     .upload-area:hover {
       border-color: #764ba2;
       background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-      transform: scale(1.02);
+      transform: scale(1.01);
     }
 
     .upload-area.dragover {
@@ -79,9 +97,9 @@
     }
 
     .upload-icon {
-      font-size: 3rem;
+      font-size: 2.5rem;
       color: #667eea;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       transition: transform 0.3s ease;
     }
 
@@ -90,13 +108,13 @@
     }
 
     .upload-text {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #555;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .upload-hint {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #888;
     }
 
@@ -108,16 +126,16 @@
       background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       border: none;
-      padding: 15px 40px;
+      padding: 12px 30px;
       border-radius: 50px;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-      margin: 20px 10px;
+      margin: 15px 8px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
 
     .btn:hover {
@@ -136,25 +154,26 @@
     }
 
     .preview-container {
-      margin: 30px 0;
+      margin: 25px 0;
       display: none;
+      text-align: center;
     }
 
     .preview-image {
       max-width: 100%;
-      max-height: 300px;
+      max-height: 280px;
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s ease;
     }
 
     .preview-image:hover {
-      transform: scale(1.05);
+      transform: scale(1.02);
     }
 
     .result {
-      margin-top: 30px;
-      padding: 30px;
+      margin-top: 25px;
+      padding: 25px;
       border-radius: 15px;
       background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(67, 160, 71, 0.1));
       border: 2px solid rgba(76, 175, 80, 0.3);
@@ -175,8 +194,8 @@
 
     .result h3 {
       color: #4CAF50;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
+      font-size: 1.3rem;
+      margin-bottom: 18px;
       font-weight: 600;
     }
 
@@ -184,9 +203,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 0;
+      padding: 12px 0;
       border-bottom: 1px solid rgba(76, 175, 80, 0.2);
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     .result-item:last-child {
@@ -202,21 +221,22 @@
       font-weight: 400;
       color: #555;
       background: rgba(76, 175, 80, 0.1);
-      padding: 8px 15px;
+      padding: 6px 12px;
       border-radius: 20px;
     }
 
     .loading {
       display: none;
       margin: 20px 0;
+      text-align: center;
     }
 
     .spinner {
-      border: 4px solid rgba(102, 126, 234, 0.1);
-      border-left: 4px solid #667eea;
+      border: 3px solid rgba(102, 126, 234, 0.1);
+      border-left: 3px solid #667eea;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       animation: spin 1s linear infinite;
       margin: 0 auto;
     }
@@ -230,7 +250,7 @@
       background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(229, 57, 53, 0.1));
       border: 2px solid rgba(244, 67, 54, 0.3);
       color: #d32f2f;
-      padding: 20px;
+      padding: 18px;
       border-radius: 15px;
       margin: 20px 0;
       display: none;
@@ -243,92 +263,73 @@
       75% { transform: translateX(5px); }
     }
 
-    @media (max-width: 768px) {
-      .container {
-        padding: 20px;
-        margin: 10px;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .upload-area {
-        padding: 30px 15px;
-      }
-
-      .btn {
-        padding: 12px 30px;
-        font-size: 1rem;
-      }
-
-      .result-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-    }
-
     .confidence-bar {
       width: 100%;
-      height: 8px;
+      height: 6px;
       background: rgba(76, 175, 80, 0.2);
-      border-radius: 4px;
+      border-radius: 3px;
       overflow: hidden;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .confidence-fill {
       height: 100%;
       background: linear-gradient(90deg, #4CAF50, #8BC34A);
-      border-radius: 4px;
+      border-radius: 3px;
       transition: width 0.8s ease;
     }
 
     /* Menu Section Styles */
-    .menu-section {
-      margin: 40px 0;
-      padding: 30px;
-      background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
-      border-radius: 20px;
-      border: 2px solid rgba(255, 193, 7, 0.2);
-    }
-
     .menu-title {
       color: #FF6F00;
-      font-size: 1.8rem;
-      margin-bottom: 10px;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
       font-weight: 600;
       text-align: center;
     }
 
     .menu-subtitle {
       color: #666;
-      font-size: 1rem;
-      margin-bottom: 25px;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
       text-align: center;
       opacity: 0.9;
     }
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 25px;
-      max-height: 300px;
-      overflow: hidden;
-      transition: max-height 0.5s ease;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 5px;
     }
 
-    .menu-grid.expanded {
-      max-height: none;
+    .menu-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .menu-grid::-webkit-scrollbar-track {
+      background: rgba(255, 193, 7, 0.1);
+      border-radius: 3px;
+    }
+
+    .menu-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 193, 7, 0.4);
+      border-radius: 3px;
+    }
+
+    .menu-grid::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 193, 7, 0.6);
     }
 
     .menu-item {
       background: rgba(255, 255, 255, 0.8);
       border: 2px solid rgba(255, 193, 7, 0.3);
-      border-radius: 12px;
-      padding: 15px;
+      border-radius: 10px;
+      padding: 12px 8px;
       text-align: center;
       transition: all 0.3s ease;
       cursor: pointer;
@@ -337,127 +338,172 @@
     }
 
     .menu-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 193, 7, 0.3);
       border-color: #FF6F00;
       background: rgba(255, 255, 255, 0.95);
     }
 
     .menu-item-emoji {
-      font-size: 2rem;
-      margin-bottom: 8px;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
       display: block;
     }
 
     .menu-item-name {
       font-weight: 600;
       color: #333;
-      font-size: 0.95rem;
+      font-size: 0.8rem;
       text-transform: capitalize;
+      line-height: 1.2;
     }
 
-    .menu-toggle {
-      background: linear-gradient(135deg, #FF6F00, #FF8F00);
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 25px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: block;
-      margin: 0 auto;
-      box-shadow: 0 4px 15px rgba(255, 111, 0, 0.3);
+    .button-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
     }
 
-    .menu-toggle:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 111, 0, 0.4);
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 800px;
+      }
+
+      .sidebar {
+        position: static;
+        order: -1;
+      }
+
+      .menu-grid {
+        grid-template-columns: repeat(4, 1fr);
+        max-height: 300px;
+      }
     }
 
     @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .content-section, .sidebar {
+        padding: 20px;
+        border-radius: 15px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .upload-area {
+        padding: 25px 15px;
+      }
+
+      .btn {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+        margin: 10px 5px;
+      }
+
       .menu-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
       }
-      
+
       .menu-item {
-        padding: 12px;
+        padding: 10px 6px;
       }
-      
+
       .menu-item-emoji {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
       }
-      
+
       .menu-item-name {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
+      }
+
+      .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>30 Vietnamese Food Classification</h1>
-    <p class="subtitle">Upload an image of Vietnamese food and let our AI identify the dish</p>
-    
-    <!-- Menu Section -->
-    <div class="menu-section">
-      <h2 class="menu-title">🍜 Recognizable Vietnamese Dishes</h2>
+  <div class="main-container">
+    <!-- Main Content Section -->
+    <div class="content-section">
+      <h1>30 Vietnamese Food Classification</h1>
+      <p class="subtitle">Upload an image of Vietnamese food and let our AI identify the dish</p>
+      
+      <form id="uploadForm">
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon">📸</div>
+          <div class="upload-text">Click to upload or drag & drop</div>
+          <div class="upload-hint">Supports JPG, JPEG, PNG files</div>
+          <input type="file" id="imageInput" accept="image/jpeg,image/png,image/jpg" required />
+        </div>
+        
+        <div class="preview-container" id="previewContainer">
+          <img id="previewImage" class="preview-image" alt="Preview" />
+        </div>
+        
+        <div class="button-group">
+          <button type="submit" class="btn" id="submitBtn">
+            🚀 Predict Image
+          </button>
+          <button type="button" class="btn" id="clearBtn" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);">
+            🗑️ Clear
+          </button>
+        </div>
+      </form>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p style="margin-top: 12px; color: #667eea; font-weight: 600;">Analyzing image...</p>
+      </div>
+
+      <div class="error" id="error"></div>
+
+      <div class="result" id="result">
+        <h3>🎯 Prediction Results</h3>
+        <div class="result-item">
+          <span class="result-label">Class:</span>
+          <span class="result-value" id="class"></span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Confidence:</span>
+          <div style="flex: 1; margin-left: 15px;">
+            <span class="result-value" id="confidence"></span>
+            <div class="confidence-bar">
+              <div class="confidence-fill" id="confidenceFill"></div>
+            </div>
+          </div>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Processing Time:</span>
+          <span class="result-value" id="time"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu Section -->
+    <div class="sidebar">
+      <h2 class="menu-title">🍜 Recognizable Dishes</h2>
       <p class="menu-subtitle">Our model can identify these 30 traditional Vietnamese foods:</p>
       <div class="menu-grid" id="menuGrid">
         <!-- Menu items will be populated by JavaScript -->
-      </div>
-      <button class="menu-toggle" id="menuToggle">
-        <span id="toggleText">View All Dishes</span> <span id="toggleIcon">▼</span>
-      </button>
-    </div>
-    
-    <form id="uploadForm">
-      <div class="upload-area" id="uploadArea">
-        <div class="upload-icon">📸</div>
-        <div class="upload-text">Click to upload or drag & drop</div>
-        <div class="upload-hint">Supports JPG, JPEG, PNG files</div>
-        <input type="file" id="imageInput" accept="image/jpeg,image/png,image/jpg" required />
-      </div>
-      
-      <div class="preview-container" id="previewContainer">
-        <img id="previewImage" class="preview-image" alt="Preview" />
-      </div>
-      
-      <button type="submit" class="btn" id="submitBtn">
-        🚀 Predict Image
-      </button>
-      <button type="button" class="btn" id="clearBtn" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);">
-        🗑️ Clear
-      </button>
-    </form>
-
-    <div class="loading" id="loading">
-      <div class="spinner"></div>
-      <p style="margin-top: 15px; color: #667eea; font-weight: 600;">Analyzing image...</p>
-    </div>
-
-    <div class="error" id="error"></div>
-
-    <div class="result" id="result">
-      <h3>🎯 Prediction Results</h3>
-      <div class="result-item">
-        <span class="result-label">Class:</span>
-        <span class="result-value" id="class"></span>
-      </div>
-      <div class="result-item">
-        <span class="result-label">Confidence:</span>
-        <div style="flex: 1; margin-left: 20px;">
-          <span class="result-value" id="confidence"></span>
-          <div class="confidence-bar">
-            <div class="confidence-fill" id="confidenceFill"></div>
-          </div>
-        </div>
-      </div>
-      <div class="result-item">
-        <span class="result-label">Processing Time:</span>
-        <span class="result-value" id="time"></span>
       </div>
     </div>
   </div>
@@ -512,9 +558,6 @@
     const confidenceFill = document.getElementById('confidenceFill');
     const timeEl = document.getElementById('time');
     const menuGrid = document.getElementById('menuGrid');
-    const menuToggle = document.getElementById('menuToggle');
-    const toggleText = document.getElementById('toggleText');
-    const toggleIcon = document.getElementById('toggleIcon');
 
     // Replace with your actual API URL
     const API_URL = 'https://5cd1-2402-800-6311-aeab-f986-c84d-7c90-ca09.ngrok-free.app/predict';
@@ -541,21 +584,6 @@
         menuGrid.appendChild(menuItem);
       });
     }
-
-    // Menu toggle functionality
-    menuToggle.addEventListener('click', () => {
-      const isExpanded = menuGrid.classList.contains('expanded');
-      
-      if (isExpanded) {
-        menuGrid.classList.remove('expanded');
-        toggleText.textContent = 'View All Dishes';
-        toggleIcon.textContent = '▼';
-      } else {
-        menuGrid.classList.add('expanded');
-        toggleText.textContent = 'Hide Dishes';
-        toggleIcon.textContent = '▲';
-      }
-    });
 
     // Initialize menu on page load
     initializeMenu();
