@@ -2,60 +2,640 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Image Prediction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VietNamese Food Classification</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
-      max-width: 600px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+
     h1 {
       color: #333;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 300;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
+
+    .subtitle {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      opacity: 0.8;
+    }
+
+    .upload-area {
+      border: 3px dashed #667eea;
+      border-radius: 15px;
+      padding: 40px 20px;
+      margin: 30px 0;
+      background: linear-gradient(45deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-area:hover {
+      border-color: #764ba2;
+      background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      transform: scale(1.02);
+    }
+
+    .upload-area.dragover {
+      border-color: #4CAF50;
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      color: #667eea;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .upload-area:hover .upload-icon {
+      transform: scale(1.1);
+    }
+
+    .upload-text {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .upload-hint {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    #imageInput {
+      display: none;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      margin: 20px 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .preview-container {
+      margin: 30px 0;
+      display: none;
+    }
+
+    .preview-image {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .preview-image:hover {
+      transform: scale(1.05);
+    }
+
     .result {
-      margin-top: 20px;
+      margin-top: 30px;
+      padding: 30px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(67, 160, 71, 0.1));
+      border: 2px solid rgba(76, 175, 80, 0.3);
+      display: none;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result h3 {
+      color: #4CAF50;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+      font-size: 1.1rem;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .result-value {
+      font-weight: 400;
+      color: #555;
+      background: rgba(76, 175, 80, 0.1);
+      padding: 8px 15px;
+      border-radius: 20px;
+    }
+
+    .loading {
+      display: none;
+      margin: 20px 0;
+    }
+
+    .spinner {
+      border: 4px solid rgba(102, 126, 234, 0.1);
+      border-left: 4px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error {
+      background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(229, 57, 53, 0.1));
+      border: 2px solid rgba(244, 67, 54, 0.3);
+      color: #d32f2f;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      display: none;
+      animation: shake 0.5s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+        margin: 10px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .upload-area {
+        padding: 30px 15px;
+      }
+
+      .btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+      }
+
+      .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+
+    .confidence-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(76, 175, 80, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .confidence-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+
+    /* Menu Section Styles */
+    .menu-section {
+      margin: 40px 0;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
+      border-radius: 20px;
+      border: 2px solid rgba(255, 193, 7, 0.2);
+    }
+
+    .menu-title {
+      color: #FF6F00;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .menu-subtitle {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 25px;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+      max-height: 300px;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .menu-grid.expanded {
+      max-height: none;
+    }
+
+    .menu-item {
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(255, 193, 7, 0.3);
+      border-radius: 12px;
       padding: 15px;
-      border: 1px solid #ccc;
-      background: #f9f9f9;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+      border-color: #FF6F00;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .menu-item-emoji {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .menu-item-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+      text-transform: capitalize;
+    }
+
+    .menu-toggle {
+      background: linear-gradient(135deg, #FF6F00, #FF8F00);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 4px 15px rgba(255, 111, 0, 0.3);
+    }
+
+    .menu-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 111, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .menu-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+      }
+      
+      .menu-item {
+        padding: 12px;
+      }
+      
+      .menu-item-emoji {
+        font-size: 1.5rem;
+      }
+      
+      .menu-item-name {
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Dự đoán ảnh</h1>
-  <form id="uploadForm">
-    <input type="file" id="imageInput" accept="image/jpeg,image/png" required />
-    <button type="submit">Gửi ảnh</button>
-  </form>
+  <div class="container">
+    <h1>30 Vietnamese Food Classification</h1>
+    <p class="subtitle">Upload an image of Vietnamese food and let our AI identify the dish</p>
+    
+    <!-- Menu Section -->
+    <div class="menu-section">
+      <h2 class="menu-title">🍜 Recognizable Vietnamese Dishes</h2>
+      <p class="menu-subtitle">Our model can identify these 30 traditional Vietnamese foods:</p>
+      <div class="menu-grid" id="menuGrid">
+        <!-- Menu items will be populated by JavaScript -->
+      </div>
+      <button class="menu-toggle" id="menuToggle">
+        <span id="toggleText">View All Dishes</span> <span id="toggleIcon">▼</span>
+      </button>
+    </div>
+    
+    <form id="uploadForm">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📸</div>
+        <div class="upload-text">Click to upload or drag & drop</div>
+        <div class="upload-hint">Supports JPG, JPEG, PNG files</div>
+        <input type="file" id="imageInput" accept="image/jpeg,image/png,image/jpg" required />
+      </div>
+      
+      <div class="preview-container" id="previewContainer">
+        <img id="previewImage" class="preview-image" alt="Preview" />
+      </div>
+      
+      <button type="submit" class="btn" id="submitBtn">
+        🚀 Predict Image
+      </button>
+      <button type="button" class="btn" id="clearBtn" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);">
+        🗑️ Clear
+      </button>
+    </form>
 
-  <div class="result" id="result" style="display:none;">
-    <h3>Kết quả dự đoán:</h3>
-    <p><strong>Class:</strong> <span id="class"></span></p>
-    <p><strong>Confidence:</strong> <span id="confidence"></span></p>
-    <p><strong>Inference time (s):</strong> <span id="time"></span></p>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p style="margin-top: 15px; color: #667eea; font-weight: 600;">Analyzing image...</p>
+    </div>
+
+    <div class="error" id="error"></div>
+
+    <div class="result" id="result">
+      <h3>🎯 Prediction Results</h3>
+      <div class="result-item">
+        <span class="result-label">Class:</span>
+        <span class="result-value" id="class"></span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">Confidence:</span>
+        <div style="flex: 1; margin-left: 20px;">
+          <span class="result-value" id="confidence"></span>
+          <div class="confidence-bar">
+            <div class="confidence-fill" id="confidenceFill"></div>
+          </div>
+        </div>
+      </div>
+      <div class="result-item">
+        <span class="result-label">Processing Time:</span>
+        <span class="result-value" id="time"></span>
+      </div>
+    </div>
   </div>
 
   <script>
+    // Vietnamese dishes data with emojis
+    const vietnameseDishes = [
+      { name: "Banh beo", emoji: "🥟" },
+      { name: "Banh bot loc", emoji: "🥟" },
+      { name: "Banh can", emoji: "🍳" },
+      { name: "Banh canh", emoji: "🍜" },
+      { name: "Banh chung", emoji: "🍘" },
+      { name: "Banh cuon", emoji: "🥟" },
+      { name: "Banh duc", emoji: "🍰" },
+      { name: "Banh gio", emoji: "🌯" },
+      { name: "Banh khot", emoji: "🥞" },
+      { name: "Banh mi", emoji: "🥖" },
+      { name: "Banh pia", emoji: "🥮" },
+      { name: "Banh tet", emoji: "🍘" },
+      { name: "Banh trang nuong", emoji: "🍪" },
+      { name: "Banh xeo", emoji: "🥞" },
+      { name: "Bun bo Hue", emoji: "🍜" },
+      { name: "Bun dau mam tom", emoji: "🍜" },
+      { name: "Bun mam", emoji: "🍜" },
+      { name: "Bun rieu", emoji: "🍜" },
+      { name: "Bun thit nuong", emoji: "🍜" },
+      { name: "Ca kho to", emoji: "🐟" },
+      { name: "Canh chua", emoji: "🍲" },
+      { name: "Cao lau", emoji: "🍜" },
+      { name: "Chao long", emoji: "🍲" },
+      { name: "Com tam", emoji: "🍚" },
+      { name: "Goi cuon", emoji: "🌯" },
+      { name: "Hu tieu", emoji: "🍜" },
+      { name: "Mi quang", emoji: "🍜" },
+      { name: "Nem chua", emoji: "🌭" },
+      { name: "Pho", emoji: "🍜" },
+      { name: "Xoi xeo", emoji: "🍚" }
+    ];
+
     const form = document.getElementById('uploadForm');
+    const uploadArea = document.getElementById('uploadArea');
+    const imageInput = document.getElementById('imageInput');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImage = document.getElementById('previewImage');
+    const submitBtn = document.getElementById('submitBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const loading = document.getElementById('loading');
     const resultDiv = document.getElementById('result');
+    const errorDiv = document.getElementById('error');
     const classEl = document.getElementById('class');
     const confidenceEl = document.getElementById('confidence');
+    const confidenceFill = document.getElementById('confidenceFill');
     const timeEl = document.getElementById('time');
+    const menuGrid = document.getElementById('menuGrid');
+    const menuToggle = document.getElementById('menuToggle');
+    const toggleText = document.getElementById('toggleText');
+    const toggleIcon = document.getElementById('toggleIcon');
 
-    // Thay URL này bằng URL public API của bạn (ngrok hoặc domain)
+    // Replace with your actual API URL
     const API_URL = 'https://5cd1-2402-800-6311-aeab-f986-c84d-7c90-ca09.ngrok-free.app/predict';
+
+    // Initialize menu
+    function initializeMenu() {
+      vietnameseDishes.forEach((dish, index) => {
+        const menuItem = document.createElement('div');
+        menuItem.className = 'menu-item';
+        menuItem.innerHTML = `
+          <span class="menu-item-emoji">${dish.emoji}</span>
+          <div class="menu-item-name">${dish.name}</div>
+        `;
+        
+        // Add click handler for menu items
+        menuItem.addEventListener('click', () => {
+          // Highlight selected item briefly
+          menuItem.style.background = 'rgba(255, 193, 7, 0.3)';
+          setTimeout(() => {
+            menuItem.style.background = 'rgba(255, 255, 255, 0.8)';
+          }, 200);
+        });
+        
+        menuGrid.appendChild(menuItem);
+      });
+    }
+
+    // Menu toggle functionality
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuGrid.classList.contains('expanded');
+      
+      if (isExpanded) {
+        menuGrid.classList.remove('expanded');
+        toggleText.textContent = 'View All Dishes';
+        toggleIcon.textContent = '▼';
+      } else {
+        menuGrid.classList.add('expanded');
+        toggleText.textContent = 'Hide Dishes';
+        toggleIcon.textContent = '▲';
+      }
+    });
+
+    // Initialize menu on page load
+    initializeMenu();
+
+    // Upload area click handler
+    uploadArea.addEventListener('click', () => {
+      imageInput.click();
+    });
+
+    // Drag and drop handlers
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        imageInput.files = files;
+        handleFileSelect();
+      }
+    });
+
+    // File input change handler
+    imageInput.addEventListener('change', handleFileSelect);
+
+    // Clear button handler
+    clearBtn.addEventListener('click', () => {
+      imageInput.value = '';
+      previewContainer.style.display = 'none';
+      resultDiv.style.display = 'none';
+      errorDiv.style.display = 'none';
+      uploadArea.style.display = 'block';
+    });
+
+    function handleFileSelect() {
+      const file = imageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewImage.src = e.target.result;
+          previewContainer.style.display = 'block';
+          uploadArea.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function showError(message) {
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+      setTimeout(() => {
+        errorDiv.style.display = 'none';
+      }, 5000);
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      // Hide previous results
       resultDiv.style.display = 'none';
-
-      const fileInput = document.getElementById('imageInput');
-      if (fileInput.files.length === 0) {
-        alert('Vui lòng chọn ảnh');
+      errorDiv.style.display = 'none';
+      
+      if (imageInput.files.length === 0) {
+        showError('Please select an image first');
         return;
       }
 
+      // Show loading
+      loading.style.display = 'block';
+      submitBtn.disabled = true;
+
       const formData = new FormData();
-      formData.append('file', fileInput.files[0]);
+      formData.append('file', imageInput.files[0]);
 
       try {
         const response = await fetch(API_URL, {
@@ -65,18 +645,24 @@
 
         if (!response.ok) {
           const err = await response.json();
-          alert(`Lỗi: ${err.detail || response.statusText}`);
-          return;
+          throw new Error(err.detail || response.statusText);
         }
 
         const data = await response.json();
+        
+        // Display results
         classEl.textContent = data.class;
-        confidenceEl.textContent = data.confidence;
-        timeEl.textContent = data.inference_time;
+        confidenceEl.textContent = `${(data.confidence * 100).toFixed(1)}%`;
+        confidenceFill.style.width = `${data.confidence * 100}%`;
+        timeEl.textContent = `${data.inference_time}s`;
+        
         resultDiv.style.display = 'block';
-
+        
       } catch (error) {
-        alert('Lỗi kết nối API: ' + error.message);
+        showError(`Connection error: ${error.message}`);
+      } finally {
+        loading.style.display = 'none';
+        submitBtn.disabled = false;
       }
     });
   </script>
