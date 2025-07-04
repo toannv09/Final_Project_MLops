@@ -25,5 +25,6 @@
 <a name="thanhvien"></a>
 * Nguyễn Vẹn Toàn - 22521492
 * Đào Văn Tuân - 22521599
-* Vũ Anh Tuấn - 22521614 
+* Vũ Anh Tuấn - 22521614
+---
 https://wandb.ai/vtuan36420-asana/vietnamese-food-classification?nw=nwuservtuan36420
