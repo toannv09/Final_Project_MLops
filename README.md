@@ -71,6 +71,7 @@ Giao diện log, chứa log của đoạn code trong quá trình chạy<br>
  ![image](https://github.com/user-attachments/assets/0a8a55ee-048e-4edf-aa9a-774776b34db8)<br>
 Giao diện Files, là nơi chứa gốc rễ thư mục, có thể tìm thấy dữ liệu đã được log ở đây dưới dạng file<br>
 
+---
 # HƯỚNG DẪN MONITORING, ALERTING VÀ LOGGING
 ## 📁 Chuẩn bị thư mục
 1.	Tải folder Deploy_api_and_Monitoring cùng toàn bộ nội dung bên trong.
