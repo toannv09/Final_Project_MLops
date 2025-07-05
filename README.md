@@ -26,5 +26,7 @@
 * Nguyễn Vẹn Toàn - 22521492
 * Đào Văn Tuân - 22521599
 * Vũ Anh Tuấn - 22521614
----
-https://wandb.ai/vtuan36420-asana/vietnamese-food-classification?nw=nwuservtuan36420
+
+## PIPIELINE
+![image](https://github.com/user-attachments/assets/12a25bdf-02d7-44fc-886c-84bb236269e0)
+
