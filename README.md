@@ -30,6 +30,9 @@
 ## PIPIELINE
 ![image](https://github.com/user-attachments/assets/12a25bdf-02d7-44fc-886c-84bb236269e0)
 
+## LINK DEMO
+https://huggingface.co/spaces/Lippovn04/Vietnamese-Food-Classification
+
 ## HƯỚNG DẪN TRACKING
 Tải file vnfood-tracking.ipynb. Sau đó upload lên kaggle để sử dụng. Dataset nhóm sử dụng là 30VNFoods cũng có trên Kaggle.<br>
 Công cụ tracking được nhóm lựa chọn sử dụng là Weight & Biases (Wandb). Dưới đây là các bước thực hiện cho quá trình tracking:<br><br>
