@@ -27,6 +27,9 @@
 * Đào Văn Tuân - 22521599
 * Vũ Anh Tuấn - 22521614
 
+##DATASET
+Link Kaggle:https://www.kaggle.com/datasets/quandang/vietnamese-foods
+
 ## PIPIELINE
 ![image](https://github.com/user-attachments/assets/12a25bdf-02d7-44fc-886c-84bb236269e0)
 
